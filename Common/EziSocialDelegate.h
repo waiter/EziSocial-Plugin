@@ -3,7 +3,9 @@
 //  EziSocial
 //
 //  Created by Paras Mendiratta on 15/04/13.
-//  Copyright @EziByte 2013
+//  Copyright @EziByte 2013 (http://www.ezibyte.com)
+//
+//  Version 1.2 (Dt: 30-May-2013)
 //
 /***
  
@@ -19,35 +21,50 @@
  
  */
 
+
 #ifndef FacebookGameDemo_EziSocialDelegate_h
 #define FacebookGameDemo_EziSocialDelegate_h
 
 #include "cocos2d.h"
+#include "EziFacebookUser.h"
 
 class EziFacebookDelegate
 {
 public:
-    virtual void fbSessionCallback(int responseCode) = 0;
-    virtual void fbUserDetailCallback(cocos2d::CCDictionary* data) = 0;
-    virtual void fbMessageCallback(int responseCode) = 0;
-    virtual void fbChallengeCallback(int responseCode) = 0;
-    virtual void fbGiftCallback(int responseCode) = 0;
-    virtual void fbPageLikeCallback(int responseCode) = 0;
-    virtual void fbFriendsCallback(cocos2d::CCArray* friends) = 0;
-    virtual void fbHighScoresCallback(cocos2d::CCArray* highScores) = 0;
+    virtual void fbSessionCallback(int responseCode, const char* responseMessage) {}
+    virtual void fbUserDetailCallback(int responseCode, const char* responseMessage, EziFacebookUser* fbUser) {}
+    virtual void fbMessageCallback(int responseCode, const char* responseMessage) {}
+    
+    virtual void fbSendRequestCallback(int responseCode, const char* responseMessage, cocos2d::CCArray* friendsGotRequests) {}
+    virtual void fbRecieveRequestCallback(int responseCode,
+                                          const char* message,
+                                          const char* senderName, cocos2d::CCDictionary* dataDictionary) {}
+    
+    virtual void fbPageLikeCallback(int responseCode, const char* responseMessage) {}
+    virtual void fbFriendsCallback(int responseCode, const char* responseMessage, cocos2d::CCArray* friends) {}
+    virtual void fbHighScoresCallback(int responseCode, const char* responseMessage, cocos2d::CCArray* highScores) {}
+    
+    virtual void fbUserPhotoCallback(const char *userPhotoPath) {}
+    
+    virtual void fbPostPhotoCallback(int responseCode, const char* responseMessage) {}
+    virtual void fbIncomingRequestCallback(int responseCode, const char* responseMessage, int totalIncomingRequests) {}
 };
 
 class EziEmailDelegate
 {
 public:
-    virtual void mailCallback(int responseCode) = 0;
+    
+    // This only works in iOS. Android doesn't provide any response.
+    virtual void mailCallback(int responseCode) {}
 };
 
 class EziTwitterDelegate
 {
     
 public:
-    virtual void twSessionCallback(int responseCode) = 0;
+    // This only works in iOS. Android doesn't provide any response.
+    virtual void twitterCallback(int responseCode) {}
 };
+
 
 #endif
